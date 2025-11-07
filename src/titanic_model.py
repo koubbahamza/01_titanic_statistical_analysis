@@ -12,3 +12,6 @@ print(test.shape)
 print(test.columns)
 print("\n=== gender_submission SET ===")
 print(gender_submission.head())
+
+
+                     
