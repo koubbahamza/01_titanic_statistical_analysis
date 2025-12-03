@@ -1,20 +1,21 @@
 🧠 Titanic — Data Analysis & Machine Learning Pipeline
 🎯 Objectif du projet
 
-Ce projet consiste à développer une analyse exploratoire complète (EDA) et un pipeline de Machine Learning entièrement automatisé pour résoudre le célèbre défi Kaggle :
-👉 Titanic — Machine Learning from Disaster.
+Ce projet consiste à développer une analyse exploratoire complète (EDA) ainsi qu’un pipeline de Machine Learning automatisé pour prédire la survie des passagers du Titanic dans le cadre du défi Kaggle :
 
-L’objectif est de :
+👉 Titanic — Machine Learning from Disaster
 
-comprendre les facteurs influençant la survie
+Les objectifs principaux sont :
 
-construire un pipeline propre, modulaire, réutilisable
+Comprendre les facteurs influençant la survie
 
-entraîner un modèle Random Forest optimisé
+Construire un pipeline propre, modulaire et réutilisable
 
-générer automatiquement des fichiers de submission Kaggle
+Entraîner un modèle Random Forest optimisé
 
-structurer le projet comme un véritable projet Data Science professionnel
+Générer automatiquement des fichiers de submission Kaggle
+
+Structurer un projet comme un véritable workflow Data Science professionnel
 
 📊 Données utilisées
 
@@ -25,19 +26,15 @@ Variables principales :
 
 Survived — cible (0 = mort, 1 = survécu)
 
-Pclass — classe du billet (1ère à 3e)
+Pclass — classe du billet
 
-Sex — sexe
-
-Age — âge
-
-Fare — prix du billet
+Sex, Age, Fare
 
 Embarked — port d’embarquement
 
 SibSp, Parch — famille
 
-Cabin, Ticket, Name — textes à transformer
+Cabin, Ticket, Name — features textuelles à transformer
 
 🔧 Technologies & Librairies
 🧪 Analyse & Manipulation
@@ -46,7 +43,7 @@ Python 3.13
 
 Pandas, NumPy
 
-Seaborn, Matplotlib
+Matplotlib, Seaborn
 
 🤖 Machine Learning
 
@@ -56,15 +53,15 @@ RandomForestClassifier
 
 cross_val_score
 
-🏗 Structuration du projet
+🏗 Structuration
 
 Architecture modulaire src/
 
-Pipeline reproductible
+Pipeline reproductible et automatisé
 
-Génération automatique des CSV avec timestamp
+Export automatique de submissions (timestamp)
 
-Notebook pour l’EDA et les tests de modèles
+Notebook dédié à l’EDA
 
 🧱 Architecture du projet
 01_titanic_statistical_analysis/
@@ -72,17 +69,17 @@ Notebook pour l’EDA et les tests de modèles
 ├── data/
 │   ├── train.csv
 │   ├── test.csv
-│   ├── submission/
-│   │   ├── submission_random_forest.csv
-│   │   └── submission_random_forest_2025xxxx_xxxxxx.csv
+│   └── submission/
+│       ├── submission_random_forest.csv
+│       └── submission_random_forest_2025xxxx_xxxxxx.csv
 │
 ├── notebooks/
-│   └── 01_data_analysis.ipynb          # EDA complète + tests modèles
+│   └── 01_data_analysis.ipynb
 │
 ├── src/
-│   ├── preprocessing.py                 # Feature engineering, imputation, encoding
-│   ├── model_random_forest.py           # Entraînement RF modulaire
-│   └── train_pipeline.py                # Pipeline ML complet (automatisé)
+│   ├── preprocessing.py
+│   ├── model_random_forest.py
+│   └── train_pipeline.py
 │
 ├── requirements.txt
 ├── README.md
@@ -90,27 +87,27 @@ Notebook pour l’EDA et les tests de modèles
 
 🧩 Pipeline Machine Learning
 
-Le pipeline complet (défini dans train_pipeline.py) suit les étapes :
+Le pipeline (défini dans train_pipeline.py) suit les étapes suivantes :
 
 1️⃣ Chargement des données
 
 train / test
 
-concaténation dans full
+concaténation en dataset global pour le preprocessing
 
 2️⃣ Feature Engineering
 
-Création des variables clés :
+Création de variables dérivées :
 
 Title (extrait du nom)
 
-Deck (extrait de Cabin)
+Deck (extrait du Cabin)
 
 FamilySize
 
 FarePerPerson
 
-Age*Class
+Age*Class (interaction)
 
 3️⃣ Imputation intelligente
 
@@ -120,43 +117,40 @@ Fare → médiane
 
 Embarked → mode
 
-4️⃣ Nettoyage des colonnes inutiles
+4️⃣ Nettoyage
 
-Suppression de : Name, Ticket, Cabin
+Suppression des colonnes non exploitables :
+Name, Ticket, Cabin
 
-5️⃣ One-Hot Encoding global
+5️⃣ Encodage
 
-Sur : Sex, Embarked, Title, Deck
+One-Hot Encoding global
 
-6️⃣ Séparation train/test alignée
+Alignement train/test garanti
 
-Garantie que les colonnes sont strictement identiques.
+6️⃣ Entraînement du modèle
 
-7️⃣ Entraînement modèle
+Modèle : RandomForestClassifier
 
-RandomForestClassifier
+Hyperparamètres optimisés
 
-Hyperparamètres optimisés (n_estimators, max_depth, etc.)
+Cross-validation 5-fold
 
-Cross-validation (5 folds)
+7️⃣ Génération de la submission
 
-8️⃣ Génération de la submission
+Prédiction sur X_test
 
-Predictions sur X_test
+Export automatique :
 
-CSV exporté automatiquement dans data/submission/
+data/submission/submission_random_forest_YYYYMMDD_HHMMSS.csv
 
-Nom unique avec timestamp
-
-🧪 Résultats du modèle
-
+📊 Résultats du modèle
 Cross-validation (5 folds) :
-
 Scores = [0.82, 0.82, 0.83, 0.81, 0.85]
-Score moyen = ~0.827
+Score moyen = 0.827
 
 
-Le modèle Random Forest donne des performances stables et cohérentes avec les benchmarks connus du Titanic.
+Ces résultats sont cohérents avec les meilleurs benchmarks Random Forest sur Titanic.
 
 🚀 Comment exécuter le pipeline
 1) Activer l’environnement virtuel
@@ -167,30 +161,25 @@ python src/train_pipeline.py
 
 3) Résultat
 
-Un fichier est généré automatiquement :
+Un fichier de submission Kaggle est généré automatiquement dans :
 
-data/submission/submission_random_forest_YYYYMMDD_HHMMSS.csv
+data/submission/
 
+📒 Notebook d’analyse
 
-➡️ Il peut être déposé directement sur Kaggle.
+Le notebook 01_data_analysis.ipynb contient :
 
-📒 Notebook d'analyse
+Analyse exploratoire complète
 
-Le notebook notebooks/01_data_analysis.ipynb contient :
+Visualisations et corrélations
 
-EDA complète
+Tests de modèles
 
-visualisations
+Cross-validation
 
-corrélations
+Interprétations
 
-test de modèles
-
-validation croisée
-
-interprétations
-
-Ce notebook sert d’espace d’analyse, tandis que src/ contient le pipeline propre en production.
+Il sert de zone d’expérimentation, tandis que src/ contient la logique industrialisée.
 
 💡 Compétences développées
 
@@ -200,20 +189,20 @@ Feature engineering avancé
 
 Traitement des valeurs manquantes
 
-One-Hot encoding cohérent entre train/test
+Encodage cohérent train/test
 
 Cross-validation
 
-Gestion d’un pipeline automatisé
+Production de pipelines automatisés
 
 Génération de fichiers de submission
 
-Nettoyage & industrialisation du code
+Industrialisation et nettoyage du code
 
 👤 Auteur
 
 Hamza Koubba
-Data Scientist & IoT Engineer • Industrie 4.0 • IA & R&D
+Data Scientist & IoT Engineer — Industrie 4.0 • IA & R&D
 
 📧 hamzakoubba95@gmail.com
 
