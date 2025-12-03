@@ -1,49 +1,57 @@
 🧠 Titanic — Data Analysis & Machine Learning Pipeline
+<div align="center">
+
+
+
+
+
+
+
+
+
+
+</div>
 🎯 Objectif du projet
 
-Ce projet consiste à développer une analyse exploratoire complète (EDA) ainsi qu’un pipeline de Machine Learning automatisé pour prédire la survie des passagers du Titanic dans le cadre du défi Kaggle :
+Ce projet met en place :
 
-👉 Titanic — Machine Learning from Disaster
+une analyse exploratoire complète (EDA)
 
-Les objectifs principaux sont :
+un pipeline Machine Learning automatisé
 
-Comprendre les facteurs influençant la survie
+un modèle Random Forest optimisé
 
-Construire un pipeline propre, modulaire et réutilisable
+une génération automatique de submissions Kaggle
 
-Entraîner un modèle Random Forest optimisé
+une architecture pro, modulaire, maintenable
 
-Générer automatiquement des fichiers de submission Kaggle
-
-Structurer un projet comme un véritable workflow Data Science professionnel
+Le but est de reproduire un vrai workflow Data Science professionnel, du nettoyage des données jusqu’à la production.
 
 📊 Données utilisées
 
-Les données proviennent du concours officiel Kaggle :
+Dataset :
 🔗 https://www.kaggle.com/c/titanic/data
 
 Variables principales :
 
-Survived — cible (0 = mort, 1 = survécu)
+Survived (0/1)
 
-Pclass — classe du billet
+Pclass, Sex, Age, Fare
 
-Sex, Age, Fare
+Embarked
 
-Embarked — port d’embarquement
+SibSp, Parch
 
-SibSp, Parch — famille
-
-Cabin, Ticket, Name — features textuelles à transformer
+Cabin, Ticket, Name (features textuelles à traiter)
 
 🔧 Technologies & Librairies
-🧪 Analyse & Manipulation
+🧪 Analyse
 
 Python 3.13
 
 Pandas, NumPy
 
-Matplotlib, Seaborn
+Seaborn, Matplotlib
 
 🤖 Machine Learning
 
@@ -51,17 +59,17 @@ Scikit-learn
 
 RandomForestClassifier
 
-cross_val_score
+Cross-validation
 
-🏗 Structuration
+🏗 Structuration & Production
 
 Architecture modulaire src/
 
-Pipeline reproductible et automatisé
+Pipeline automatisé
 
-Export automatique de submissions (timestamp)
+Export CSV avec timestamp
 
-Notebook dédié à l’EDA
+Notebook séparé pour l’EDA
 
 🧱 Architecture du projet
 01_titanic_statistical_analysis/
@@ -71,7 +79,7 @@ Notebook dédié à l’EDA
 │   ├── test.csv
 │   └── submission/
 │       ├── submission_random_forest.csv
-│       └── submission_random_forest_2025xxxx_xxxxxx.csv
+│       └── submission_random_forest_YYYYMMDD_HHMMSS.csv
 │
 ├── notebooks/
 │   └── 01_data_analysis.ipynb
@@ -86,30 +94,25 @@ Notebook dédié à l’EDA
 └── .gitignore
 
 🧩 Pipeline Machine Learning
-
-Le pipeline (défini dans train_pipeline.py) suit les étapes suivantes :
-
 1️⃣ Chargement des données
 
-train / test
+Import train/test
 
-concaténation en dataset global pour le preprocessing
+Concaténation pour preprocessing global
 
 2️⃣ Feature Engineering
 
-Création de variables dérivées :
+Title → extrait du champ Name
 
-Title (extrait du nom)
-
-Deck (extrait du Cabin)
+Deck → extrait de la cabine
 
 FamilySize
 
 FarePerPerson
 
-Age*Class (interaction)
+Age*Class
 
-3️⃣ Imputation intelligente
+3️⃣ Imputation
 
 Age → médiane par Title
 
@@ -119,38 +122,36 @@ Embarked → mode
 
 4️⃣ Nettoyage
 
-Suppression des colonnes non exploitables :
+Suppression :
 Name, Ticket, Cabin
 
 5️⃣ Encodage
 
-One-Hot Encoding global
+One-Hot Encoding
 
-Alignement train/test garanti
+Alignement strict train/test
 
-6️⃣ Entraînement du modèle
+6️⃣ Entraînement
 
 Modèle : RandomForestClassifier
 
 Hyperparamètres optimisés
 
-Cross-validation 5-fold
+Cross-validation (5 folds)
 
 7️⃣ Génération de la submission
-
-Prédiction sur X_test
 
 Export automatique :
 
 data/submission/submission_random_forest_YYYYMMDD_HHMMSS.csv
 
 📊 Résultats du modèle
-Cross-validation (5 folds) :
+Cross-validation (5 folds)
 Scores = [0.82, 0.82, 0.83, 0.81, 0.85]
 Score moyen = 0.827
 
 
-Ces résultats sont cohérents avec les meilleurs benchmarks Random Forest sur Titanic.
+Le Random Forest obtient des performances stables et proches des benchmarks Kaggle.
 
 🚀 Comment exécuter le pipeline
 1) Activer l’environnement virtuel
@@ -161,43 +162,43 @@ python src/train_pipeline.py
 
 3) Résultat
 
-Un fichier de submission Kaggle est généré automatiquement dans :
+Un fichier est généré automatiquement dans :
 
 data/submission/
 
 📒 Notebook d’analyse
 
-Le notebook 01_data_analysis.ipynb contient :
+Le fichier 01_data_analysis.ipynb contient :
 
-Analyse exploratoire complète
+Analyse exploratoire
 
-Visualisations et corrélations
+Visualisations
 
-Tests de modèles
+Corrélations
 
-Cross-validation
+Tests de plusieurs modèles
 
-Interprétations
+Validation croisée
 
-Il sert de zone d’expérimentation, tandis que src/ contient la logique industrialisée.
+Sélection du meilleur modèle
+
+Il sert de zone d’expérimentation avant l'industrialisation du pipeline.
 
 💡 Compétences développées
 
-Structuration d’un projet ML complet
+Construction d’un projet ML complet
 
 Feature engineering avancé
 
-Traitement des valeurs manquantes
-
-Encodage cohérent train/test
+Encodage et imputation intelligents
 
 Cross-validation
 
-Production de pipelines automatisés
+Pipeline automatisé
 
-Génération de fichiers de submission
+Export et versioning des résultats
 
-Industrialisation et nettoyage du code
+Industrialisation de code
 
 👤 Auteur
 
