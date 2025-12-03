@@ -1,7 +1,7 @@
 # 🧮 Titanic Statistical Analysis
 
 ### 🎯 Objectif du projet
-Ce projet a pour objectif de réaliser une **analyse statistique descriptive** du célèbre dataset Titanic afin de comprendre les relations entre les variables (âge, sexe, classe, tarif, taux de survie...).
+Ce projet a pour objectif de réaliser une **analyse statistique descriptive** ainsi qu’un pipeline Machine Learning complet sur le célèbre dataset Titanic afin de comprendre les facteurs influençant la survie et de construire un modèle prédictif fiable.
 
 Il fait partie d’une série de mini-projets personnels pour renforcer mes bases en **mathématiques appliquées à la data science**.
 
@@ -22,36 +22,97 @@ Il contient les principales informations sur les passagers :
 - **Jupyter Notebook**
 - **Pandas**, **NumPy**
 - **Matplotlib**, **Seaborn**
-- **SciPy** (tests statistiques)
+- **SciPy**
 
 ---
 
 ### 🚀 Étapes principales
-1. Importation et exploration des données  
-2. Nettoyage et traitement des valeurs manquantes  
-3. Calcul des statistiques descriptives : moyenne, médiane, écart-type, corrélation  
-4. Visualisation des distributions et relations entre variables  
-5. Interprétation des résultats : quelles caractéristiques influencent la survie ?
+
+1. Analyse Statistique (EDA)
+
+- Exploration du dataset
+- Analyse des distributions : âge, tarifs, classes
+- Étude des corrélations avec la survie
+- Visualisations explicatives (heatmaps, barplots, KDE…)
+
+2. Nettoyage des données
+
+- Gestion des valeurs manquantes
+- Age imputé par médiane selon le Title
+- Embarked imputé par le mode
+- Fare imputé par médiane
+- Normalisation et structuration des colonnes
+- Suppression de Name, Ticket, Cabin
+
+3. Feature Engineering avancé
+
+-Ajout de nouvelles variables pertinentes :
+-Title (extrait de Name)
+-Deck (extrait de Cabin)
+-FamilySize = SibSp + Parch + 1
+-FarePerPerson = Fare / FamilySize
+-Age*Class (pas necessaire)
+
+4. Encodage
+
+-One-Hot Encoding global sur : Sex, Embarked, Title, Deck
+-Alignement parfait entre train & test
+
+5. Entraînement du modèle
+
+-Modèle utilisé : RandomForestClassifier
+-Hyperparamètres choisis :
+
+- n_estimators = 300
+
+- max_depth = 6
+
+- min_samples_split = 5
+
+- min_samples_leaf = 2
+
+- random_state = 42
+
+- n_jobs = -1
+
+6. Validation
+
+-Cross-validation 5-fold
+-Résultat moyen : ~0.827
+
+7. Génération automatique des fichiers Kaggle
+
+-Prédiction sur le dataset test
+-Export automatique : data/submission/submission_random_forest_YYYYMMDD_HHMMSS.csv
 
 ---
 
 ### 💡 Compétences renforcées
-- Statistiques descriptives  
-- Visualisation de données  
-- Interprétation statistique  
-- Manipulation de données avec Pandas
+- Statistiques descriptives appliquées
+- Preprocessing propre & structuré
+- Feature engineering pertinent
+- Gestion avancée des valeurs manquantes
+- Création d’un pipeline ML reproductible
+- Cross-validation & tuning de modèle
+- Génération automatisée de résultats
 
 ---
 
 ### 📁 Organisation du projet
 
 01_titanic_statistical_analysis/
-├── data/ # Dataset (non inclus)
-├── notebooks/ # Titanic_analysis.ipynb
-├── images/ # Graphiques
+├── data/                 # Données train/test + submission
+├── notebooks/
+│   └── 01_data_analysis.ipynb
+├── src/
+│   ├── preprocessing.py
+│   ├── model_random_forest.py
+│   └── train_pipeline.py
+├── images/              # Graphiques exportés (optionnel)
 ├── README.md
 ├── requirements.txt
 └── .gitignore
+
 
 
 ---
